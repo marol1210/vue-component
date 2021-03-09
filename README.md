@@ -7,6 +7,9 @@
 laravel-mix(webpack) + vue
 
 
+#### 目录说明
+src-[third-part实现]
+
 #### 特技
 1.  基础动画效果, 基于tailwindcss
 2.  vue i18n支持
