@@ -1,17 +1,27 @@
 let mix = require('laravel-mix');
+let htmlWebPlugin = require('html-webpack-plugin');
 let path = require('path');
 
-mix.alias({'@': 'src-inertiajs'})
+mix.alias({'@': 'src-inertiajs'}).setPublicPath('./dist')
 
-mix.js('src-inertiajs/app.js', 'dist/avored')
+mix
 	.webpackConfig({
-	    output: { chunkFilename: 'dist/avored/[name].js?id=[chunkhash]' },
-	    resolve: {
-	      alias: {
-	        vue$: 'vue/dist/vue.runtime.esm.js'
-	      },
-	    },
+	  	mode: 'development',
+		entry:__dirname+"/src-inertiajs/app.js",
+	    output: { 
+			path: path.resolve(__dirname, 'dist'),
+			chunkFilename: '[name].js?id=[chunkhash]' ,
+			clean:true
+		},
+		/*
+		plugins:[
+			new htmlWebPlugin(
+				{
+					title:"Demo",
+					scriptLoading:"blocking"
+				}
+			)
+		]
+		*/
   })
-  .vue();
-
-mix.copy('dist/',path.normalize('F:\\eclipse\\git-repository\\laravel-ecommerce\\src\\public\\js'))
+  .vue()

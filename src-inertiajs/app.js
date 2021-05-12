@@ -1,36 +1,40 @@
-import Vue from 'vue'
-import { App, plugin } from '@inertiajs/inertia-vue'
+import { createApp, h } from 'vue'
 import './asset/css/tailwind/app.css'
-import VueMeta from 'vue-meta'
-import './services/components'
-import i18n from './services/i18n'
+import { App, plugin } from '@inertiajs/inertia-vue3'
 import path from 'path'
-
-window.axios = require('axios');
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-window.axios.defaults.headers['content-type'] = 'application/json'
-window.axios.defaults.responseType='json'
-window.axios.defaults.transformResponse = [function (data) {
-	return data;
-}];
-
-
 import { InertiaProgress } from '@inertiajs/progress'
 InertiaProgress.init({delay:50})
 
-//自定义
+//self modules
 import Layout from './pages/layout/Default'
+import Component   from '@/services/component'
 
-
-Vue.use(plugin)
-Vue.use(VueMeta)
+let data_set = '{"component":"event/Show","props":{"event":{"id":80,"title":"Birthday party","start_date":"2019-06-02","description":"Come out and celebrate Jonathan&apos;s 36th birthday party!"}},"url":"/","version":"c32b8e4965f418ad16eaebba1d4e960f"}';
 
 const el = document.getElementById('app')
-Vue.prototype.$route = route
+const app = createApp({
+  render: () => h(App, {
+    initialPage: JSON.parse(data_set),
+    resolveComponent: name => {
+			return import(`./pages/${name}`)
+				  .then(({ default: page }) => {
+				    page.layout = Layout
+				    return page
+		  	})
+      }
+  })
+})
+.use(plugin)
 
-//为自定义的选项 'myOption' 注入一个处理器。
-Vue.mixin({
-  methods:{
+Component.init(app)
+/*
+app.component('CSidebar',Component.CSidebar)
+app.component('CMenu',Component.CMenu)
+app.component('CHeader',Component.CHeader)
+*/
+
+app.mixin({
+methods:{
 	  axiosRequest(axiosOptions){
         return axios(axiosOptions).then(function (response) {
         	return response;
@@ -53,30 +57,12 @@ Vue.mixin({
 	 	     console.log(error.config);
  	   });
 	  }
+  },
+  computed:{
+	_config: function(){
+		return require('./defaultConfig')
+	}
   }
 })
 
-new Vue({
-  i18n,
-  render: h => h(App, {
-    props: {
-      initialPage: JSON.parse(el.dataset.page),
-      resolveComponent: name => {
-			if(`${name}`.startsWith('avored')){
-				let _path = `${name}`.split(path.sep)
-				_path = _path.slice(1)
-				let _name = './components/'+_path.join('/')
-				let c = require(`${_name}`).default
-				c.layout = Layout
-				return c
-			}
-
-			return import(`./pages/${name}`)
-				  .then(({ default: page }) => {
-				    page.layout = Layout
-				    return page
-		  	})
-      }
-    },
-  })
-}).$mount(el)
+app.mount(el)

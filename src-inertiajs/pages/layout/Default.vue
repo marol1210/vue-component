@@ -1,10 +1,15 @@
 <template>
     <div class="flex items-start">
-        <div :class="sidebar ? 'w-14 z-0 transition sidebar-collapsed duration-500' : 'w-64'">
-           	<side-bar :sidebar_menu_bgColor="sidebar_menu_bgColor" :sidebar_menu_hover_bgColor="sidebar_menu_hover_bgColor" :sidebar_gbColor="sidebar_gbColor" :sidebar_menu_textColor="sidebar_menu_textColor">
-           	</side-bar>
+        <div :class="sidebar ? 'w-14 z-0 sidebar-collapsed' : 'w-64'" class="transition-all duration-300" >
+           	<c-sidebar :sidebar_menu_bgColor="sidebar_menu_bgColor" 
+           				:sidebar_menu_hover_bgColor="sidebar_menu_hover_bgColor" 
+           				:sidebar_gbColor="sidebar_gbColor" 
+           				:sidebar_menu_textColor="sidebar_menu_textColor"
+           				class="h-screen overflow-y-auto overflow-x-hidden"
+           	>
+           	</c-sidebar>
         </div>
-        <div class="w-full">
+        <div class="w-full text-gray-300">
            	<!-- page_header -->
         	<c-header 
         		v-on:sidebar="sidebar=!sidebar"
@@ -16,15 +21,15 @@
 
 			<!-- page_title -->
             <h1 class="mx-4 px-4 my-3">
-		        <div class="text-gray-800 flex items-center">
-			        <div class="text-xl text-red-700 font-semibold">
+		        <div class="flex items-center">
+			        <div class="text-xl font-semibold">
 			            {{ page_title }}
 			        </div>
 			    </div>
             </h1>
             
             <!-- page_content -->
-            <div class="rounded p-5 mx-3 my-3 bg-white">
+            <div class="p-5 mx-3 my-3">
             	<slot></slot>
             </div>
         </div>
