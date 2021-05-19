@@ -1,8 +1,8 @@
 <template>
-<div class="rounded-md bg-gray-600 p-4 shadow-md">
-	<slot name="default">
+<div class="p-4 shadow-md" :class="[c_transtion, _config.theme.bgColor]">
 		<div class="card-header">
-			<slot name="action" :actions="[1,2]">
+			<slot name="title">title</slot>
+			<slot name="action">
 			 <Menu class="relative float-right" as="div">
 			    <MenuButton class="flex">
 				    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -33,20 +33,19 @@
 		</div>
 	
 		<div>
-			<table class="border-collapse w-full ">
-				<thead class="text-primary">
-					<tr>
-						<td v-for="col of columns">{{col.name}}</td>
+			<table class="border-collapse w-full">
+				<thead class="text-primary" v-if="show_thead">
+					<tr class="p-3">
+						<td class="p-2" v-for="col of columns">{{col.name}}</td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="rows of data">
-						<td v-for="col of columns">{{}}</td>
+					<tr v-for="rows of dataSource" class="border-t border-gray-700">
+						<td class="p-2" v-for="col of columns">{{rows[col.fieldName]}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-	</slot>
 </div>
 </template>
 
@@ -61,19 +60,30 @@ export default {
 		MenuItem
 	},
 	name: "Table",
+	data:function(){
+		return {
+			c_transtion: '',
+			dataSource: this.data,
+			show_thead: this.show
+		}
+	},
 	props: {
 		columns:{
 			type: Array,
-			require:true,
-			default: () => [
-				{"name":"ID"},
-				{"name":"名字"},
-				{"name":"邮箱"},
-				{"name":"地址"}
-			]
+			require:true
 		},
+		show:{
+			type:Boolean,
+			default:true
+		},
+		//数据
 		data:{
-			type:Array
+			type:Array,
+			default: () => []
+		},
+		//数据来源url
+		dataUrl:{
+			type:String
 		},
 		headTitle:{
 			type: String,
@@ -81,6 +91,17 @@ export default {
 		},
 		actions:{
 			type:Array
+		}
+	},
+	created:function(){
+		this.c_transtion = 'transform scale-90 opacity-0'
+	},
+	mounted:function(){
+		this.c_transtion = 'transition ease-in-out transform duration-500 scale-100'
+		if(this.dataSource.length<=0){
+			this.dataSource.push( {id:"1" , name:"cctv" , email:"cctv@sina.com", address:'cctv'} )
+			this.dataSource.push( {id:"2" , name:"marol" , email:"marol@sina.com", address:'marol'} )
+			this.dataSource.push( {id:"3" , name:"after_school" , email:"after_school@sina.com", address:'after_school'} )
 		}
 	}
 }
