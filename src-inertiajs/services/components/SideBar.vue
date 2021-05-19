@@ -7,7 +7,7 @@
 	        </a>
 	    </div>
 	
-        <div style="height: calc(100% - 4em)" :class="sidebar_menu_textColor" class="mt-4 overflow-y-auto overflow-x-hidden bg-gradient-to-b from-green-500 to-green-600 text-gray-200 h-full" id="_marol_sidebar">
+        <div :class="sidebar_menu_textColor" class="bg-blue-800 mt-2 overflow-y-auto overflow-x-hidden text-gray-200 h-full" id="_marol_sidebar" style="height:calc(100vh - 4rem)">
 	    	<slot>
 	    		<c-menu class="flex flex-col" :menu="menu" :pid="pid" :key="pid" v-for="(menu,kname,pid) of menus" :theme="theme"></c-menu>
 	    	</slot>

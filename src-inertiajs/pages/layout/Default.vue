@@ -1,15 +1,16 @@
 <template>
-    <div class="flex items-start">
-        <div :class="sidebar ? 'w-14 z-0 sidebar-collapsed' : 'w-64'" class="transition-all duration-300" >
+    <div class="flex items-start bg-gradient-to-r to-black from-gray-900 h-screen overflow-y-hidden overflow-x-hidden">
+        <div :class="sidebar ? 'w-14 z-0 sidebar-collapsed' : 'w-64'" class="flex-initial transition-all duration-300">
            	<c-sidebar :sidebar_menu_bgColor="sidebar_menu_bgColor" 
            				:sidebar_menu_hover_bgColor="sidebar_menu_hover_bgColor" 
            				:sidebar_gbColor="sidebar_gbColor" 
            				:sidebar_menu_textColor="sidebar_menu_textColor"
-           				class="h-screen overflow-y-auto overflow-x-hidden"
+           				class="overflow-y-auto overflow-x-hidden"
            	>
            	</c-sidebar>
         </div>
-        <div class="w-full text-gray-300">
+        
+        <div class="flex-grow text-gray-300" :style="sidebar ?  '' :  'width:calc(100vw - 16rem)'">
            	<!-- page_header -->
         	<c-header 
         		v-on:sidebar="sidebar=!sidebar"
@@ -17,10 +18,10 @@
         	></c-header>
         	
 			<!-- page_breadcrumb -->
-			<div class="ml-4 my-3" v-html="breadTrumb"></div>
+			<div class="ml-4" v-html="breadTrumb"></div>
 
 			<!-- page_title -->
-            <h1 class="mx-4 px-4 my-3">
+            <h1 class="mx-4 px-4">
 		        <div class="flex items-center">
 			        <div class="text-xl font-semibold">
 			            {{ page_title }}
@@ -29,8 +30,8 @@
             </h1>
             
             <!-- page_content -->
-            <div class="p-5 mx-3 my-3">
-            	<slot></slot>
+            <div class="flex flex-col space-y-6 h-screen p-2 h-screen" style="height:calc(100vh - 5rem)">
+        		<slot></slot>
             </div>
         </div>
     </div>
