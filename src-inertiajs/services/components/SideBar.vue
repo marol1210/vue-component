@@ -7,7 +7,8 @@
 	        </a>
 	    </div>
 	
-        <div :class="sidebar_menu_textColor" class="bg-blue-800 mt-2 overflow-y-auto overflow-x-hidden text-gray-200 h-full" id="_marol_sidebar" style="height:calc(100vh - 4rem)">
+        <div :class="sidebar_menu_textColor" class="bg-blue-800 mt-2 overflow-y-auto overflow-x-hidden text-gray-200 h-full" 
+        	 id="_marol_sidebar" style="height:calc(100vh - 4rem)">
 	    	<slot>
 	    		<c-menu class="flex flex-col" :menu="menu" :pid="pid" :key="pid" v-for="(menu,kname,pid) of menus" :theme="theme"></c-menu>
 	    	</slot>
@@ -27,6 +28,21 @@
 .sidebar-collapsed > #___sidebar___
 {
     overflow-x:hidden;
+}
+
+::-webkit-scrollbar
+{
+    width: .3em;
+}
+
+
+::-webkit-scrollbar-track 
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(255,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: darkgrey;
 }
 
 .sidebar-collapsed #_marol_sidebar > div[id]:hover > div:last-child {

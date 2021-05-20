@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-start bg-gradient-to-r to-black from-gray-900 h-screen overflow-y-hidden overflow-x-hidden">
+    <div class="flex items-start bg-gradient-to-r to-black from-gray-900 h-screen overflow-y-auto overflow-x-hidden">
         <div :class="sidebar ? 'w-14 z-0 sidebar-collapsed' : 'w-64'" class="flex-initial transition-all duration-300">
            	<c-sidebar :sidebar_menu_bgColor="sidebar_menu_bgColor" 
            				:sidebar_menu_hover_bgColor="sidebar_menu_hover_bgColor" 

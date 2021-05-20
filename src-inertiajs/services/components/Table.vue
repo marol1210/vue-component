@@ -34,7 +34,7 @@
 	
 		<div>
 			<table class="border-collapse w-full">
-				<thead class="text-primary" v-if="show_thead">
+				<thead class="text-primary" v-if="showThead">
 					<tr class="p-3">
 						<td class="p-2" v-for="col of columns">{{col.name}}</td>
 					</tr>
@@ -64,7 +64,7 @@ export default {
 		return {
 			c_transtion: '',
 			dataSource: this.data,
-			show_thead: this.show
+			showThead: this.show
 		}
 	},
 	props: {
