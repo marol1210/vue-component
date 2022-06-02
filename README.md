@@ -1,16 +1,13 @@
-# vue-components
-
 #### 介绍
-进行中的项目,可用复用的vue组件
+整理沉淀前端所学知识
+产出Vue复用组件
 
 #### 软件架构
-laravel-mix(webpack) + vue
+后端：laravel
+前端：laravel-mix + vue & tailwindcss
 
 
 #### 目录说明
-src-[third-part实现]
+src - [源码文件]
 
-#### 特技
-1.  基础动画效果, 基于tailwindcss
-2.  vue i18n支持
-3.  axios支持
+#### 其他说明

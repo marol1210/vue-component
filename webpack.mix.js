@@ -1,27 +1,33 @@
 let mix = require('laravel-mix');
-let htmlWebPlugin = require('html-webpack-plugin');
 let path = require('path');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 
-mix.alias({'@': 'src-inertiajs'}).setPublicPath('./dist')
+mix.options({
+	hmrOptions:{
+		host: "0.0.0.0",
+        port: 8080
+	}
+})
 
 mix
-	.webpackConfig({
-	  	mode: 'development',
-		entry:__dirname+"/src-inertiajs/app.js",
-	    output: { 
-			path: path.resolve(__dirname, 'dist'),
-			chunkFilename: '[name].js?id=[chunkhash]' ,
-			clean:true
-		},
-		/*
-		plugins:[
-			new htmlWebPlugin(
-				{
-					title:"Demo",
-					scriptLoading:"blocking"
-				}
-			)
-		]
-		*/
-  })
-  .vue()
+.alias({'@': 'src'})
+.alias({'@asset': path.join(__dirname, 'asset')}).postCss('./asset/css/app.css','.',[require("tailwindcss")])
+
+mix
+    .webpackConfig({
+        entry:{main:"./src/app.js"},
+        output: {
+            filename: '[name].bundle.js',
+            path: path.resolve(__dirname, 'dist')
+        },
+        // plugins: [new HtmlWebpackPlugin()]
+        devServer:{
+            static: './dist',
+            webSocketServer: false,
+            allowedHosts: 'all'
+        },
+        optimization: {
+            runtimeChunk: 'single',
+        }
+    })
+    .vue()

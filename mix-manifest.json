@@ -1,3 +1,6 @@
 {
-    "/dist/avored/app.js": "/dist/avored/app.js"
+    "/mix.bundle.js": "/mix.bundle.js",
+    "/main.bundle.js": "/main.bundle.js",
+    "/runtime.bundle.js": "/runtime.bundle.js",
+    "/app.css": "/app.css"
 }
